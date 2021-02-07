@@ -10,24 +10,26 @@ export const Form = styled.form`
   input {
     flex: 1;
     background: #eee;
-    border: 1px solid #eee;
+    border: 2px solid #eee;
     padding: 10px 15px;
     border-radius: 35px;
     font-size: 16px;
     height: 50px;
 
     transition: border 0.25s ease-out;
+
+    &:focus {
+      border: 2px solid blue;
+    }
   }
 `;
 
 export const Search = styled.input`
-  flex: 1;
   background: #eee;
   border: 1px solid #eee;
   padding: 10px 15px;
   border-radius: 35px;
   font-size: 16px;
-  height: 50px;
 
   transition: border 0.25s ease-out;
 `;

@@ -33,29 +33,19 @@ export default class Main extends Component {
     this.state = {
       search: {},
       resp: [],
-      title: [],
-      imag: null,
       page: 1,
-      loading: true,
-      error: null,
-      moviesPerPage: [],
-      paginatorVisible: false,
     };
   }
 
-  handleInputChange = e => {
-    this.setState({ search: e.target.value, error: null });
+  handleInputChange = (e) => {
+    this.setState({ search: e.target.value });
   };
 
-  handleSubmit = async e => {
+  handleSubmit = async (e) => {
     e.preventDefault();
 
-    this.setState({
-      loading: true,
-      error: false,
-    });
-
     const { search, page } = this.state;
+    // console.log(search);
 
     const response = await api.get(
       `search/movie?api_key=${moviedb.apiKey}&language=pt-BR&query=${search}`,
@@ -66,23 +56,14 @@ export default class Main extends Component {
       }
     );
 
-    const data = {
-      find: response.data.results.slice(0, 5),
-    };
+    // console.log(response.data);
 
-    // if (data) {
-    //   this.setState({
-    //     paginatorVisible: true,
-    //   });
-    // } else {
-    //   this.setState({
-    //     paginatorVisible: false,
-    //   });
-    // }
+    const data = {
+      find: response.data.results.slice(0, 5), // returning 5 data from indince 0
+    };
 
     this.setState({
       resp: data.find,
-      loading: false,
     });
   };
 
@@ -100,7 +81,7 @@ export default class Main extends Component {
           />
         </Form>
         <FilmList>
-          {resp.map(results => (
+          {resp.map((results) => (
             <Link key={results.id} to={`/${encodeURIComponent(results.id)}`}>
               <FilmBox key={String(results.title)}>
                 <Poster
