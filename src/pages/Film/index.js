@@ -58,15 +58,15 @@ const Film = () => {
   const location = useLocation();
 
   useEffect(() => {
-    setId(location.pathname);
-    console.log(location.pathname);
+    const newId = location.pathname.replace('/', '');
+    setId(newId);
   }, [location.pathname]);
 
   useEffect(() => {
     async function fetchData() {
       const [response, video] = await Promise.all([
-        api.get(`movie${id}?api_key=${moviedb.apiKey}&language=pt-BR`),
-        api.get(`movie${id}/videos?api_key=${moviedb.apiKey}&language=pt-BR`),
+        api.get(`movie/${id}?api_key=${moviedb.apiKey}&language=pt-BR`),
+        api.get(`movie/${id}/videos?api_key=${moviedb.apiKey}&language=pt-BR`),
       ]);
 
       const filter = response.data.genres;
