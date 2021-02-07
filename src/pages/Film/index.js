@@ -38,7 +38,8 @@ import {
   TextTitle,
 } from './styles';
 
-// convert
+
+//convert
 function timeConvert(n) {
   const num = n;
   const hours = num / 60;
