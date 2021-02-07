@@ -69,7 +69,7 @@ const Main = () => {
       </Form>
       <FilmList>
         {resp.map((results) => (
-          <Link key={results.id} to={`/${String(results.id)}`}>
+          <Link key={results.id} to={`/${results.id}`}>
             <FilmBox key={String(results.title)}>
               <Poster
                 src={
