@@ -33,6 +33,7 @@ const Main = () => {
     setSearch(e.target.value);
   }, []);
 
+  // good performance
   const handleSubmit = useCallback(
     async (e) => {
       e.preventDefault();
@@ -55,7 +56,6 @@ const Main = () => {
     [search, page]
   );
 
-  // const { resp } = this.state;
   const ResponsiveEllipses = responsiveHOC()(LinesEllipsis);
 
   return (

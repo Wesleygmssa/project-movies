@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import Iso from 'iso-639-1';
 import { FaSpinner, FaArrowLeft } from 'react-icons/fa';
 import Moment from 'react-moment';
@@ -62,25 +62,24 @@ const Film = () => {
     setId(newId);
   }, [location.pathname]);
 
-  useEffect(() => {
-    async function fetchData() {
-      const [response, video] = await Promise.all([
-        api.get(`movie/${id}?api_key=${moviedb.apiKey}&language=pt-BR`),
-        api.get(`movie/${id}/videos?api_key=${moviedb.apiKey}&language=pt-BR`),
-      ]);
+  const fetchData = useCallback(async () => {
+    const [response, video] = await Promise.all([
+      api.get(`movie/${id}?api_key=${moviedb.apiKey}&language=pt-BR`),
+      api.get(`movie/${id}/videos?api_key=${moviedb.apiKey}&language=pt-BR`),
+    ]);
 
-      const filter = response.data.genres;
+    const filter = response.data.genres;
 
-      setResp(response.data);
-      setVideos(video.data.results);
-      setCategorias(filter);
-      setLoading(false);
-    }
-    fetchData();
+    setResp(response.data);
+    setVideos(video.data.results);
+    setCategorias(filter);
+    setLoading(false);
   }, [id]);
+  fetchData();
 
   const ResponsiveEllipses = responsiveHOC()(LinesEllipsis);
 
+  // true || false
   if (loading) {
     return (
       <Loading>
