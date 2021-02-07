@@ -24,7 +24,6 @@ import {
   Overview,
 } from './styles';
 
-// Princpal class
 export default class Main extends Component {
   constructor(props) {
     super(props);
@@ -82,7 +81,7 @@ export default class Main extends Component {
         </Form>
         <FilmList>
           {resp.map((results) => (
-            <Link key={results.id} to={`/${encodeURIComponent(results.id)}`}>
+            <Link key={results.id} to={`/${String(results.id)}`}>
               <FilmBox key={String(results.title)}>
                 <Poster
                   src={

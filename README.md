@@ -6,13 +6,13 @@
 
  * Primeiro instale as dependencias:
  ```bash
- yarn
+ npm i
  ```
 
 ### :computer: Scripts de inicialização:
   * Inicie a aplicação em modo desenvolvimento!
  ```bash
- yarn start
+ npm start
  ```
  * Abra [http://localhost:3000](http://localhost:3000) para vizualizar em seu navegador
 
