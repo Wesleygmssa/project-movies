@@ -52,26 +52,30 @@ const Film = () => {
   // console.log(videos);
 
   useEffect(() => {
-    const newId = location.pathname.replace('/', ''); //
-    setId(newId);
+    setTimeout(() => {
+      const newId = location.pathname.replace('/', ''); //
+      setId(newId);
 
-    const fetchData = async () => {
-      const [response, video] = await Promise.all([
-        api.get(`movie/${id}?api_key=${moviedb.apiKey}&language=pt-BR`),
-        api.get(`movie/${id}/videos?api_key=${moviedb.apiKey}&language=pt-BR`),
-      ]);
-      // eslint-disable-next-line no-console
-      // console.log(response);
-      const filter = response.data.genres;
+      const fetchData = async () => {
+        const [response, video] = await Promise.all([
+          api.get(`movie/${id}?api_key=${moviedb.apiKey}&language=pt-BR`),
+          api.get(
+            `movie/${id}/videos?api_key=${moviedb.apiKey}&language=pt-BR`
+          ),
+        ]);
+        // eslint-disable-next-line no-console
+        // console.log(response);
 
-      setResp(response.data);
-      setVideos(video.data.results);
-      setCategorias(filter);
-      setLoading(false);
-    };
+        const filter = response.data.genres;
 
-    fetchData();
-  }, [location.pathname, id]);
+        setResp(response.data);
+        setVideos(video.data.results);
+        setCategorias(filter);
+        setLoading(false);
+      };
+      fetchData();
+    }, 3000);
+  }, [id, location.pathname]);
 
   const ResponsiveEllipses = responsiveHOC()(LinesEllipsis);
 
