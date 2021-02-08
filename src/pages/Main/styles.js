@@ -19,7 +19,7 @@ export const Form = styled.form`
     transition: border 0.25s ease-out;
 
     &:focus {
-      border: 2px solid blue;
+      border: 2px solid #116193;
     }
   }
 `;

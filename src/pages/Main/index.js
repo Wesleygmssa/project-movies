@@ -23,6 +23,9 @@ import {
   Rate,
   Date,
   Overview,
+  PageActions,
+  PageButton,
+  SpanPage,
   // Loading,
   // Spinner,
 } from './styles';
@@ -31,6 +34,8 @@ const Main = () => {
   const [search, setSearch] = useState({});
   const [resp, setResp] = useState([]);
   const [page] = useState(1);
+  // const [totalPage, setTotalPage] = useState(0); // total de registroz
+  // const [postsPage, setPostPage] = useState(5);
   // const [loading, setLoading] = useState(true);
 
   const handleInputChange = useCallback((e) => {
@@ -61,17 +66,6 @@ const Main = () => {
   );
 
   const ResponsiveEllipses = responsiveHOC()(LinesEllipsis);
-
-  // if (loading) {
-  //   return (
-  //     <Loading>
-  //       <Spinner>
-  //         <FaSpinner color="#000F" size={55} />
-  //       </Spinner>
-  //       Carregando...
-  //     </Loading>
-  //   );
-  // }
 
   return (
     <Container>
@@ -116,6 +110,12 @@ const Main = () => {
             </FilmBox>
           </Link>
         ))}
+        {/* criar logica de  paginação */}
+        <PageActions>
+          <PageButton type="button">{page - 1}</PageButton>
+          <SpanPage>{page}</SpanPage>
+          <PageButton type="button">{page + 1}</PageButton>
+        </PageActions>
       </FilmList>
     </Container>
   );
