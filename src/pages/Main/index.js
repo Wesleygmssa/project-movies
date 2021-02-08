@@ -1,4 +1,8 @@
-import React, { useCallback, useState } from 'react';
+/* eslint-disable no-useless-return */
+/* eslint-disable no-use-before-define */
+/* eslint-disable prettier/prettier */
+/* eslint-disable no-unused-vars */
+import React, { useCallback, useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import Moment from 'react-moment';
 import LinesEllipsis from 'react-lines-ellipsis';
@@ -10,6 +14,7 @@ import Container from '../../components/Container';
 
 import api from '../../services/api';
 import moviedb from '../../config/moviedb';
+import Pagination from '../../components/Paging/index';
 
 /* VISUAL */
 import {
@@ -26,21 +31,18 @@ import {
   PageActions,
   PageButton,
   SpanPage,
-  // Loading,
-  // Spinner,
 } from './styles';
 
 const Main = () => {
   const [search, setSearch] = useState({});
-  const [resp, setResp] = useState([]);
-  const [page] = useState(1);
-  // const [totalPage, setTotalPage] = useState(0); // total de registroz
-  // const [postsPage, setPostPage] = useState(5);
-  // const [loading, setLoading] = useState(true);
+  const [posts, setPosts] = useState([]);
+  const [page, setPage] = useState(1);
+  const [totalPage, setTotalPage] = useState(0);
+  const [postsPage, setPostsPage] = useState(5);
+  const [paginatorVisible, setPaginatorVisible] = useState(false);
 
   const handleInputChange = useCallback((e) => {
     setSearch(e.target.value);
-    // setLoading(false);
   }, []);
 
   // good performance
@@ -50,20 +52,19 @@ const Main = () => {
 
       const response = await api.get(
         `search/movie?api_key=${moviedb.apiKey}&language=pt-BR&query=${search}`,
-        {
-          params: {
-            page,
-          },
-        }
       );
 
+      // limitando dados por pagina
       const data = {
         find: response.data.results.slice(0, 5), // returning 5 dadoskk from indince 0
       };
-      setResp(data.find);
+      setPosts(data.find);
+      setPaginatorVisible(true);
     },
-    [search, page]
+    [search]
   );
+
+
 
   const ResponsiveEllipses = responsiveHOC()(LinesEllipsis);
 
@@ -77,7 +78,7 @@ const Main = () => {
         />
       </Form>
       <FilmList>
-        {resp.map((results) => (
+        {posts.map((results) => (
           <Link key={results.id} to={`/${results.id}`}>
             <FilmBox key={String(results.title)}>
               <Poster
@@ -110,12 +111,13 @@ const Main = () => {
             </FilmBox>
           </Link>
         ))}
-        {/* criar logica de  paginação */}
-        <PageActions>
-          <PageButton type="button">{page - 1}</PageButton>
-          <SpanPage>{page}</SpanPage>
-          <PageButton type="button">{page + 1}</PageButton>
-        </PageActions>
+        {paginatorVisible && (
+          <PageActions>
+            <PageButton type="button">{page - 1}</PageButton>
+            <SpanPage>{page}</SpanPage>
+            <PageButton type="button">{page + 1}</PageButton>
+          </PageActions>
+        )}
       </FilmList>
     </Container>
   );

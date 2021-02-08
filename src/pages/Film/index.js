@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import Iso from 'iso-639-1';
-import { FaSpinner, FaArrowLeft } from 'react-icons/fa';
+import { FaArrowLeft } from 'react-icons/fa';
 import Moment from 'react-moment';
 import LinesEllipsis from 'react-lines-ellipsis';
 import responsiveHOC from 'react-lines-ellipsis/lib/responsiveHOC';
@@ -13,6 +13,7 @@ import YoutubeVideo from '../../components/YoutubeVideo';
 import Topic from '../../components/Topic';
 import Rate from '../../components/Rate';
 import TimeConvert from '../../config/TimeConvert';
+import ImageLoading from '../../Assets/Images/loading.gif';
 
 import {
   Container,
@@ -79,7 +80,7 @@ const Film = () => {
     return (
       <Loading>
         <Spinner>
-          <FaSpinner color="#FFF" size={55} />
+          <img src={ImageLoading} alt="" />
         </Spinner>
         Carregando...
       </Loading>
