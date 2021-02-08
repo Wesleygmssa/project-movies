@@ -123,7 +123,7 @@ export const BottomBox = styled.div`
   display: flex;
   flex-direction: row;
   justify-items: center;
-  padding-top: 100px;
+  padding-top: 50px;
 `;
 
 export const CategorieBox = styled.div`
@@ -131,15 +131,23 @@ export const CategorieBox = styled.div`
   flex-direction: row;
   width: 100%;
   height: 100%;
-  justify-content: space-between;
+  align-items: center;
 
   li {
+    display: flex;
+    align-items: center;
+    justify-content: center;
     background: #fff;
     font-family: 'Abel';
-    padding: 10px 17px;
+    padding: 0px 17px;
+    height: 38px;
     border-radius: 25px;
     border: 2px solid #116193;
     color: #116193;
+
+    & + li {
+      margin-left: 16px;
+    }
   }
 `;
 
@@ -153,6 +161,7 @@ export const Loading = styled.div`
   justify-content: center;
   align-items: center;
   height: 100vh;
+  z-index: 0;
 `;
 
 const rotate = keyframes`
@@ -168,7 +177,7 @@ const rotate = keyframes`
 export const Spinner = styled.div`
   margin-bottom: 10px;
   svg {
-    animation: ${rotate} 2s linear infinite;
+    animation: ${rotate} 3s linear infinite;
     fill: #116193;
   }
 `;

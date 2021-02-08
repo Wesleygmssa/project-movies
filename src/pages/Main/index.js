@@ -4,6 +4,7 @@ import Moment from 'react-moment';
 import LinesEllipsis from 'react-lines-ellipsis';
 import responsiveHOC from 'react-lines-ellipsis/lib/responsiveHOC';
 
+// import { FaSpinner } from 'react-icons/fa';
 // container globAL
 import Container from '../../components/Container';
 
@@ -22,15 +23,19 @@ import {
   Rate,
   Date,
   Overview,
+  // Loading,
+  // Spinner,
 } from './styles';
 
 const Main = () => {
   const [search, setSearch] = useState({});
   const [resp, setResp] = useState([]);
   const [page] = useState(1);
+  // const [loading, setLoading] = useState(true);
 
   const handleInputChange = useCallback((e) => {
     setSearch(e.target.value);
+    // setLoading(false);
   }, []);
 
   // good performance
@@ -50,13 +55,23 @@ const Main = () => {
       const data = {
         find: response.data.results.slice(0, 5), // returning 5 dadoskk from indince 0
       };
-
       setResp(data.find);
     },
     [search, page]
   );
 
   const ResponsiveEllipses = responsiveHOC()(LinesEllipsis);
+
+  // if (loading) {
+  //   return (
+  //     <Loading>
+  //       <Spinner>
+  //         <FaSpinner color="#000F" size={55} />
+  //       </Spinner>
+  //       Carregando...
+  //     </Loading>
+  //   );
+  // }
 
   return (
     <Container>

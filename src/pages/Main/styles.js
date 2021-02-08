@@ -161,7 +161,7 @@ export const PageButton = styled.button`
 export const Loading = styled.div`
   display: flex;
   flex-direction: column;
-  color: #fff;
+  color: #000;
   font-size: 30px;
   font-weight: bold;
   justify-content: center;
