@@ -41,8 +41,7 @@ const Main = () => {
   const [search, setSearch] = useState({});
   const [posts, setPosts] = useState([]);
   const [page, setPage] = useState(1);
-  const [totalPage, setTotalPage] = useState(0);
-  const [limit, setLimit] = useState(5);
+  const [total, setTotal] = useState(0); // total de itens no array
   const [paginatorVisible, setPaginatorVisible] = useState(false);
   const [loading, setLoading] = useState(true);
 
@@ -61,14 +60,12 @@ const Main = () => {
         `search/movie?api_key=${moviedb.apiKey}&language=pt-BR&query=${search}`,
       );
 
-      // limitando dados por pagina
-      const data = {
+      const totalP = {
         find: response.data.results.lenght
       };
       setLoading(false)
-      setTotalPage(data.find);
-      setPosts(response.data.results)
-
+      setTotal(totalP.find);
+      setPosts(response.data.results);
       setPaginatorVisible(true);
     },
     [search],
