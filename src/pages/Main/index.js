@@ -1,15 +1,14 @@
+/* eslint-disable no-plusplus */
 /* eslint-disable no-useless-return */
 /* eslint-disable no-use-before-define */
 /* eslint-disable prettier/prettier */
 /* eslint-disable no-unused-vars */
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useCallback, useState } from 'react';
 import { Link } from 'react-router-dom';
 import Moment from 'react-moment';
 import LinesEllipsis from 'react-lines-ellipsis';
 import responsiveHOC from 'react-lines-ellipsis/lib/responsiveHOC';
-import Pagination from '../../components/Pagination';
 
-// import { FaSpinner } from 'react-icons/fa';
 // container globAL
 import Container from '../../components/Container';
 
@@ -34,16 +33,16 @@ import {
   Loading,
   Spinner,
 } from './styles';
-import ImageLoading from '../../Assets/Images/loading.gif';
 
 
 const Main = () => {
   const [search, setSearch] = useState({});
   const [posts, setPosts] = useState([]);
-  const [page, setPage] = useState(1);
   const [total, setTotal] = useState(0); // total de itens no array
+  const [limit, setLimit] = useState(5);
+  const [pages, setPages] = useState(1);
   const [paginatorVisible, setPaginatorVisible] = useState(false);
-  const [loading, setLoading] = useState(true);
+  const [currentPage, setCurrentPage] = useState(1);
 
 
 
@@ -51,38 +50,32 @@ const Main = () => {
     setSearch(e.target.value);
   }, []);
 
-  const handleSubmit = useCallback(
+  const handleSubmit = useCallback(async (e) => {
+    e.preventDefault();
+    const response = await api.get(
+      `search/movie?api_key=${moviedb.apiKey}&language=pt-BR&query=${search}`,
+    );
+    const totalP = {
+      find: await response.data.results.length
+    };
+    await setTotal(totalP.find);
 
-    async (e) => {
-      e.preventDefault();
-
-      const response = await api.get(
-        `search/movie?api_key=${moviedb.apiKey}&language=pt-BR&query=${search}`,
-      );
-
-      const totalP = {
-        find: response.data.results.lenght
-      };
-      setLoading(false)
-      setTotal(totalP.find);
-      setPosts(response.data.results);
-      setPaginatorVisible(true);
-    },
-    [search],
+    const totalPages = Math.ceil(totalP.find / limit);
+    const arrayPages = [];
+    for (let i = 1; i <= totalPages; i++) {
+      arrayPages.push(i);
+    }
+    setPages(arrayPages)
+    await setPosts(response.data.results);
+    await setPaginatorVisible(true);
+  },
+    [search, limit],
   );
 
   const ResponsiveEllipses = responsiveHOC()(LinesEllipsis);
 
   return (
-
     <Container>
-      {loading === [] && (<Loading>
-        <Spinner>
-          <img src={ImageLoading} alt="" />
-        </Spinner>
-        Carregando...
-      </Loading>)}
-
       <Form onSubmit={handleSubmit}>
         <Search
           type="text"
@@ -126,9 +119,12 @@ const Main = () => {
         ))}
         {paginatorVisible && (
           <PageActions>
-            <PageButton type="button">{page - 1}</PageButton>
-            <SpanPage>{page}</SpanPage>
-            <PageButton type="button">{page + 1}</PageButton>
+            {/* <SpanPage>{total}</SpanPage> */}
+
+            {pages.map(page => (
+              <SpanPage key={page} onClick={() => { setCurrentPage(page) }} >{page}</SpanPage>
+            ))}
+
           </PageActions>
         )}
       </FilmList>

@@ -136,12 +136,15 @@ export const SpanPage = styled.span`
   padding-left: 1px;
   color: #00e8e4;
   font-size: 20px;
+  cursor: pointer;
 `;
 
 export const PageButton = styled.button`
+  display: flex;
+  align-items: center;
   transition: opacity 0.25s ease-out;
   border-radius: 50%;
-  width: 37px;
+  width: 50px;
   outline: 0;
   border: 10;
   padding: 8px;
