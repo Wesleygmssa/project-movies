@@ -14,7 +14,6 @@ import Container from '../../components/Container';
 
 import api from '../../services/api';
 import moviedb from '../../config/moviedb';
-import Pagination from '../../components/Paging/index';
 
 /* VISUAL */
 import {
@@ -52,7 +51,6 @@ const Main = () => {
     setSearch(e.target.value);
   }, []);
 
-  // good performance
   const handleSubmit = useCallback(
 
     async (e) => {
@@ -64,8 +62,9 @@ const Main = () => {
 
       // limitando dados por pagina
       const data = {
-        find: response.data.results.slice(0, 5), // returning 5 dadoskk from indince 0
+        find: response.data.results
       };
+      console.log(data);
       setLoading(false)
       setPosts(data.find);
       setPaginatorVisible(true);
