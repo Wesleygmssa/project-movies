@@ -31,7 +31,11 @@ import {
   PageActions,
   PageButton,
   SpanPage,
+  Loading,
+  Spinner,
 } from './styles';
+import ImageLoading from '../../Assets/Images/loading.gif';
+
 
 const Main = () => {
   const [search, setSearch] = useState({});
@@ -40,6 +44,9 @@ const Main = () => {
   const [totalPage, setTotalPage] = useState(0);
   const [postsPage, setPostsPage] = useState(5);
   const [paginatorVisible, setPaginatorVisible] = useState(false);
+  const [loading, setLoading] = useState(true);
+
+
 
   const handleInputChange = useCallback((e) => {
     setSearch(e.target.value);
@@ -47,6 +54,7 @@ const Main = () => {
 
   // good performance
   const handleSubmit = useCallback(
+
     async (e) => {
       e.preventDefault();
 
@@ -58,18 +66,25 @@ const Main = () => {
       const data = {
         find: response.data.results.slice(0, 5), // returning 5 dadoskk from indince 0
       };
+      setLoading(false)
       setPosts(data.find);
       setPaginatorVisible(true);
     },
-    [search]
+    [search],
   );
-
-
 
   const ResponsiveEllipses = responsiveHOC()(LinesEllipsis);
 
   return (
+
     <Container>
+      {loading === [] && (<Loading>
+        <Spinner>
+          <img src={ImageLoading} alt="" />
+        </Spinner>
+        Carregando...
+      </Loading>)}
+
       <Form onSubmit={handleSubmit}>
         <Search
           type="text"

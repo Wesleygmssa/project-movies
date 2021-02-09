@@ -74,7 +74,7 @@ const Film = () => {
         setLoading(false);
       };
       fetchData();
-    }, 3000);
+    }, 2000);
   }, [id, location.pathname]);
 
   const ResponsiveEllipses = responsiveHOC()(LinesEllipsis);
