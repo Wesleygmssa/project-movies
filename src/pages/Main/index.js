@@ -7,6 +7,7 @@ import { Link } from 'react-router-dom';
 import Moment from 'react-moment';
 import LinesEllipsis from 'react-lines-ellipsis';
 import responsiveHOC from 'react-lines-ellipsis/lib/responsiveHOC';
+import Pagination from '../../components/Pagination';
 
 // import { FaSpinner } from 'react-icons/fa';
 // container globAL
@@ -41,7 +42,7 @@ const Main = () => {
   const [posts, setPosts] = useState([]);
   const [page, setPage] = useState(1);
   const [totalPage, setTotalPage] = useState(0);
-  const [postsPage, setPostsPage] = useState(5);
+  const [limit, setLimit] = useState(5);
   const [paginatorVisible, setPaginatorVisible] = useState(false);
   const [loading, setLoading] = useState(true);
 
@@ -62,11 +63,12 @@ const Main = () => {
 
       // limitando dados por pagina
       const data = {
-        find: response.data.results
+        find: response.data.results.lenght
       };
-      console.log(data);
       setLoading(false)
-      setPosts(data.find);
+      setTotalPage(data.find);
+      setPosts(response.data.results)
+
       setPaginatorVisible(true);
     },
     [search],
